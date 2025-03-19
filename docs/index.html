@@ -15,7 +15,7 @@
             --highlight-color: #e94560;
             --text-color: #f5f5f5;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -23,7 +23,7 @@
             background-color: #f8f9fa;
             overflow-x: hidden;
         }
-        
+
         .hero {
             background-color: var(--primary-color);
             color: var(--text-color);
@@ -31,7 +31,7 @@
             position: relative;
             margin-bottom: 2rem;
         }
-        
+
         .hero::after {
             content: "";
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c3/John_F._Kennedy%2C_White_House_color_photo_portrait.jpg');
@@ -44,18 +44,18 @@
             right: 0;
             bottom: 0;
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 1;
         }
-        
+
         .feature-icon {
             font-size: 2.5rem;
             color: var(--highlight-color);
             margin-bottom: 1rem;
         }
-        
+
         .section {
             padding: 5rem 0;
             width: 100%;
@@ -64,12 +64,12 @@
             position: relative;
             margin-bottom: 4rem;
         }
-        
+
         .section-dark {
             background-color: var(--secondary-color);
             color: var(--text-color);
         }
-        
+
         .card {
             border: none;
             border-radius: 10px;
@@ -81,28 +81,28 @@
             position: relative;
             margin-bottom: 2rem;
         }
-        
+
         .card:hover {
             transform: translateY(-5px);
         }
-        
+
         .btn-primary {
             background-color: var(--highlight-color);
             border-color: var(--highlight-color);
         }
-        
+
         .btn-primary:hover {
             background-color: #d03d54;
             border-color: #d03d54;
         }
-        
+
         pre {
             background-color: #f1f1f1;
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
         }
-        
+
         footer {
             background-color: var(--primary-color);
             color: var(--text-color);
@@ -111,18 +111,18 @@
             clear: both;
             display: block;
         }
-        
+
         .social-icons a {
             color: var(--text-color);
             font-size: 1.5rem;
             margin: 0 10px;
             transition: color 0.3s ease;
         }
-        
+
         .social-icons a:hover {
             color: var(--highlight-color);
         }
-        
+
         .jfk-portrait {
             border-radius: 50%;
             border: 5px solid var(--text-color);
@@ -133,17 +133,17 @@
             margin: 2rem auto 0;
             display: block;
         }
-        
+
         .jfk-portrait:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
-        
+
         /* Fix for layout issues */
         .container {
             position: relative;
         }
-        
+
         #features, #how-it-works, #getting-started, #configuration, #why {
             position: relative;
             width: 100%;
@@ -151,12 +151,12 @@
             display: block;
             clear: both;
         }
-        
+
         .row {
             position: relative;
             width: 100%;
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 767px) {
             .jfk-portrait {
@@ -208,7 +208,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 text-center">
-                    <img src="assets/images/jfk-portrait.jpg" alt="JFK Portrait" class="jfk-portrait img-fluid">
+                    <img src="assets/images/jfk-portrait.jpg" alt="JFK Portrait" class="img-fluid rounded-3 shadow-lg" style="max-height: 300px; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -262,7 +262,7 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/JFK_assassination_Zapruder_film_frame_150_Moorman_photo_overlay.jpg" alt="JFK Documents Process" class="img-fluid rounded-3 shadow">
+                    <img src="assets/images/jfk-documents-process.jpg" alt="JFK Documents Process" class="img-fluid rounded-3 shadow">
                 </div>
                 <div class="col-lg-6">
                     <div class="d-flex mb-4">
@@ -325,7 +325,7 @@
                 <div class="col-lg-8 mx-auto">
                     <div class="card p-4 mb-4" style="display: block; position: relative; margin-bottom: 2rem;">
                         <h3 class="h5 fw-bold mb-3">Setup & Installation</h3>
-                        
+
                         <h4 class="h6 fw-bold mt-4 mb-2">Prerequisites</h4>
                         <ul class="mb-4">
                             <li>Elixir 1.18+</li>
@@ -333,7 +333,7 @@
                             <li>Rust and Cargo</li>
                             <li>OpenAI API key</li>
                         </ul>
-                        
+
                         <h4 class="h6 fw-bold mt-4 mb-2">Installation</h4>
                         <p>Clone the repository and install dependencies:</p>
                         <pre><code>git clone https://github.com/epinault/jfk_pdf_summarizer.git
@@ -358,7 +358,7 @@ mix deps.get</code></pre>
                 <div class="col-lg-8 mx-auto">
                     <div class="card p-4 mb-4" style="display: block; position: relative;">
                         <h3 class="h5 fw-bold mb-3">Configuration & Running</h3>
-                        
+
                         <h4 class="h6 fw-bold mt-4 mb-2">API Key Configuration</h4>
                         <p>Create a <code>config/dev.secret.exs</code> file with your OpenAI API key:</p>
                         <pre><code>import Config
@@ -372,7 +372,7 @@ config :langchain,
 # Set the OpenAI API key as an environment variable
 config :openai,
   api_key: "your_openai_api_key_here"</code></pre>
-                        
+
                         <h4 class="h6 fw-bold mt-4 mb-2">Running the Application</h4>
                         <p>Compile and start the Phoenix server:</p>
                         <pre><code>mix compile
@@ -398,10 +398,10 @@ mix phx.server</code></pre>
                 <div class="col-lg-6 order-lg-1">
                     <h3 class="h4 fw-bold mb-3">Democratizing Access to Historical Documents</h3>
                     <p>The JFK assassination records contain thousands of pages of documents that are challenging to process manually. This project aims to make these historical records more accessible to researchers, historians, and the general public.</p>
-                    
+
                     <h3 class="h4 fw-bold mb-3 mt-4">Leveraging Modern Technology</h3>
                     <p>By combining the power of Elixir, Rust, and AI, we've created a tool that can quickly process and summarize complex documents, saving researchers countless hours of manual work.</p>
-                    
+
                     <h3 class="h4 fw-bold mb-3 mt-4">Open Source Collaboration</h3>
                     <p>This project is open source to encourage collaboration and improvements from the community. We believe that by working together, we can create better tools for historical research and document analysis.</p>
                 </div>
