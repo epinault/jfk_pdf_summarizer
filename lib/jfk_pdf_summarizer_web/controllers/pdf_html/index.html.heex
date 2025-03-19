@@ -1,0 +1,60 @@
+<div class="mx-auto max-w-4xl p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-3xl font-bold text-center mb-8">JFK Document Summarizer</h1>
+  
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Summarize a PDF by URL</h2>
+    <form action={~p"/summarize-url"} method="post" class="space-y-4">
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+      <div>
+        <label for="url" class="block text-sm font-medium text-gray-700">PDF URL</label>
+        <input 
+          type="url" 
+          name="url" 
+          id="url" 
+          placeholder="https://example.com/document.pdf" 
+          required
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        />
+      </div>
+      <button 
+        type="submit" 
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Summarize
+      </button>
+    </form>
+  </div>
+  
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Upload a PDF</h2>
+    <form action={~p"/summarize-upload"} method="post" enctype="multipart/form-data" class="space-y-4">
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+      <div>
+        <label for="pdf" class="block text-sm font-medium text-gray-700">PDF File</label>
+        <input 
+          type="file" 
+          name="pdf" 
+          id="pdf" 
+          accept=".pdf" 
+          required
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        />
+      </div>
+      <button 
+        type="submit" 
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Upload & Summarize
+      </button>
+    </form>
+  </div>
+  
+  <div class="text-center">
+    <a 
+      href={~p"/jfk-documents"} 
+      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+    >
+      Browse JFK Documents
+    </a>
+  </div>
+</div>

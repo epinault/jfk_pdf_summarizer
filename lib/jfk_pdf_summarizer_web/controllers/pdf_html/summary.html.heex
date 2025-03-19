@@ -1,0 +1,41 @@
+<div class="mx-auto max-w-4xl p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-3xl font-bold text-center mb-8">PDF Summary</h1>
+  
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2">Source</h2>
+    <p class="text-gray-700 break-all"><%= @url %></p>
+  </div>
+  
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Summary</h2>
+    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+      <p class="whitespace-pre-line"><%= @summary %></p>
+    </div>
+  </div>
+  
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Original Text</h2>
+    <details class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+      <summary class="cursor-pointer font-medium">Show/Hide Original Text</summary>
+      <div class="mt-4 whitespace-pre-line max-h-96 overflow-y-auto">
+        <%= @text %>
+      </div>
+    </details>
+  </div>
+  
+  <div class="flex justify-between">
+    <a 
+      href={~p"/"} 
+      class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Back to Home
+    </a>
+    
+    <a 
+      href={~p"/jfk-documents"} 
+      class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+    >
+      Browse JFK Documents
+    </a>
+  </div>
+</div>
