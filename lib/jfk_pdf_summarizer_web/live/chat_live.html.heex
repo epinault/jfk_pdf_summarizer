@@ -1,0 +1,135 @@
+<div class="mx-auto max-w-5xl p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-3xl font-bold text-center mb-8">JFK Document Chat</h1>
+  
+  <p class="mb-6 text-gray-700 text-center">
+    Ask questions about the JFK documents and I'll find relevant information for you.
+  </p>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Chat area -->
+    <div class="lg:col-span-2">
+      <div class="border border-gray-200 rounded-lg p-4 mb-4 h-96 overflow-y-auto" id="chat-messages">
+        <div id="empty-state">
+          <div class="text-center text-gray-500 mt-32">
+            <p>No messages yet. Start by asking a question about JFK documents.</p>
+          </div>
+        </div>
+        
+        <div id="messages" phx-update="stream">
+          <%= for {message_id, message} <- @streams.messages do %>
+            <div id={message_id} class={"flex mb-4 #{if message.role == :user, do: "justify-end"}"}>
+              <div class={"max-w-3/4 p-3 rounded-lg #{if message.role == :user, do: "bg-indigo-100 text-gray-800", else: "bg-gray-100 text-gray-800"}"}>
+                <%= if message.role == :assistant do %>
+                  <div class="font-semibold mb-1">Assistant</div>
+                <% end %>
+                <div class="whitespace-pre-wrap"><%= message.content %></div>
+                <div class="text-xs text-gray-500 mt-1">
+                  <%= Calendar.strftime(message.timestamp, "%I:%M %p") %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <form phx-submit="submit_query" class="flex">
+        <input
+          type="text"
+          name="query"
+          value={@query}
+          placeholder="Ask a question about JFK documents..."
+          class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          phx-debounce="300"
+          disabled={@loading}
+        />
+        <button
+          type="submit"
+          class={"px-4 py-2 bg-indigo-600 text-white rounded-r-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 #{if @loading, do: "opacity-50 cursor-not-allowed"}"}
+          disabled={@loading}
+        >
+          <%= if @loading do %>
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          <% else %>
+            Send
+          <% end %>
+        </button>
+      </form>
+    </div>
+    
+    <!-- Similar documents -->
+    <div class="lg:col-span-1">
+      <h2 class="text-xl font-semibold mb-4">Relevant Documents</h2>
+      
+      <div class="border border-gray-200 rounded-lg p-4 h-96 overflow-y-auto">
+        <%= if Enum.empty?(@similar_documents) and not @loading do %>
+          <div class="text-center text-gray-500 mt-32">
+            <p>Ask a question to see relevant documents.</p>
+          </div>
+        <% end %>
+        
+        <%= if @loading and Enum.empty?(@similar_documents) do %>
+          <div class="text-center text-gray-500 mt-32">
+            <svg class="animate-spin h-8 w-8 text-indigo-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p>Searching for relevant documents...</p>
+          </div>
+        <% end %>
+        
+        <%= for document <- @similar_documents do %>
+          <div class="border border-gray-200 rounded-lg p-3 mb-3 hover:bg-gray-50">
+            <h3 class="font-medium text-md"><%= document.title %></h3>
+            <p class="text-sm text-gray-600 mb-2 line-clamp-2"><%= document.description %></p>
+            <div class="flex justify-between items-center">
+              <a href={document.url} target="_blank" class="text-xs text-indigo-600 hover:text-indigo-800 underline">View</a>
+              <form action="/summarize-url" method="post">
+                <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                <input type="hidden" name="url" value={document.url} />
+                <button 
+                  type="submit" 
+                  class="text-xs px-2 py-1 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                >
+                  Summarize
+                </button>
+              </form>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Check if we have messages and hide/show empty state accordingly
+  function updateEmptyState() {
+    const messagesContainer = document.getElementById('messages');
+    const emptyState = document.getElementById('empty-state');
+    
+    if (messagesContainer && emptyState) {
+      if (messagesContainer.children.length > 0) {
+        emptyState.classList.add('hidden');
+      } else {
+        emptyState.classList.remove('hidden');
+      }
+    }
+  }
+  
+  // Run on initial load
+  document.addEventListener('DOMContentLoaded', updateEmptyState);
+  
+  // Run when messages are updated
+  document.addEventListener('phx:update', function() {
+    updateEmptyState();
+    
+    // Auto-scroll chat to bottom when new messages arrive
+    const chatMessages = document.getElementById('chat-messages');
+    if (chatMessages) {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  });
+</script>

@@ -21,6 +21,9 @@ defmodule JfkPdfSummarizerWeb.Router do
     post "/summarize-url", PdfController, :summarize_url
     post "/summarize-upload", PdfController, :summarize_upload
     get "/jfk-documents", PdfController, :jfk_documents
+    
+    # Add LiveView route for chat
+    live "/chat", ChatLive, :index
   end
 
   # Other scopes may use custom stacks.
