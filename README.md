@@ -2,7 +2,7 @@
 
 A Phoenix application that downloads and summarizes JFK documents in PDF format using Elixir, Rust, and LangChain.
 
-**[Visit Our Website](https://your-username.github.io/jfk_pdf_summarizer/)**
+**[Visit Our Website](https://epinault.github.io/jfk_pdf_summarizer/)**
 
 ## Features
 
