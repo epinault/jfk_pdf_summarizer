@@ -63,7 +63,9 @@ defmodule JfkPdfSummarizer.MixProject do
       # Add LangChain for summarization
       {:langchain, "~> 0.3.2"},
       # Add Temp for temporary file handling
-      {:temp, "~> 0.4"}
+      {:temp, "~> 0.4"},
+      # Add CSV for parsing CSV files
+      {:csv, "~> 3.2"}
     ]
   end
 

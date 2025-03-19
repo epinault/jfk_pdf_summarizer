@@ -8,6 +8,12 @@ defmodule JfkPdfSummarizer.JfkDocuments do
   This includes real documents from the 2025 release.
   """
   def list_documents do
+    # Combine the static list with documents from the CSV file
+    static_documents() ++ load_csv_documents()
+  end
+
+  # Static list of important documents
+  defp static_documents do
     [
       %{
         title: "Warren Commission Report",
@@ -23,49 +29,29 @@ defmodule JfkPdfSummarizer.JfkDocuments do
         title: "Assassination Records Review Board Report",
         url: "https://www.archives.gov/research/jfk/review-board/report/index",
         description: "Report from the board established to collect assassination records"
-      },
-      # 2025 Release Documents
-      %{
-        title: "JFK Document 104-10004-10143",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10004-10143.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10004-10156",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10004-10156.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10005-10321",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10005-10321.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10006-10247",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10006-10247.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10007-10345",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10007-10345.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10009-10021",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10009-10021.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10012-10022",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10012-10022.pdf",
-        description: "Document from the 2025 JFK Records Release"
-      },
-      %{
-        title: "JFK Document 104-10014-10051",
-        url: "https://www.archives.gov/files/research/jfk/releases/2025/0318/104-10014-10051.pdf",
-        description: "Document from the 2025 JFK Records Release"
       }
     ]
+  end
+
+  # Load documents from the CSV file
+  defp load_csv_documents do
+    csv_path = Path.join(File.cwd!(), "jfk_links.csv")
+    
+    if File.exists?(csv_path) do
+      csv_path
+      |> File.stream!()
+      |> CSV.decode!(headers: true)
+      |> Enum.map(fn %{"Filename" => filename, "URL" => url} ->
+        %{
+          title: "JFK Document #{filename}",
+          url: url,
+          description: "Document from the JFK Records Collection"
+        }
+      end)
+    else
+      # If CSV file doesn't exist, return an empty list
+      []
+    end
   end
   
   @doc """
