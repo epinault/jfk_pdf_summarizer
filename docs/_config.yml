@@ -1,8 +1,0 @@
-theme: jekyll-theme-cayman
-title: JFK PDF Summarizer
-description: An open-source tool for downloading, processing, and summarizing JFK assassination records using AI
-show_downloads: true
-github:
-  repository_url: https://github.com/your-username/jfk_pdf_summarizer
-  zip_url: https://github.com/your-username/jfk_pdf_summarizer/archive/main.zip
-  tar_url: https://github.com/your-username/jfk_pdf_summarizer/archive/main.tar.gz
