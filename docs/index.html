@@ -130,7 +130,7 @@
             filter: grayscale(100%);
             transition: all 0.5s ease;
             max-width: 300px;
-            margin: 0 0 0 auto;
+            margin: 2rem auto 0;
             display: block;
         }
         
@@ -155,6 +155,14 @@
         .row {
             position: relative;
             width: 100%;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .jfk-portrait {
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
@@ -199,7 +207,7 @@
                         <a href="#getting-started" class="btn btn-outline-light btn-lg px-4">Get Started</a>
                     </div>
                 </div>
-                <div class="col-lg-6 d-flex justify-content-center align-items-center" style="float: right; text-align: right;">
+                <div class="col-lg-6 text-center">
                     <img src="assets/images/jfk-portrait.jpg" alt="JFK Portrait" class="jfk-portrait img-fluid">
                 </div>
             </div>
